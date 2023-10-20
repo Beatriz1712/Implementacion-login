@@ -1,0 +1,27 @@
+<h2>Prodcuts</h2>
+<div class="class">
+    {{#each products}}
+        <div class="card">
+                <div class="card">
+                    <img class="card" src={{this.thumbnail}} alt="imagen"/>
+                    <label>Nombre: {{this.title}}</label>    
+                    <label>Precio: {{this.price}}</label>    
+                    <label>Descripción: {{this.description}}</label>    
+                </div>
+                <div class="card-footer">
+                    <button class="btn">Detalle</button>
+                </div>
+        </div>
+    {{/each}}
+</div>
+
+ <center>
+    {{#if hasPrevPage}}
+        <a href="/products?numPage={{prevPage}}"><button>Anterior</button></a>
+    {{/if}}
+    <label>{{page}}</label>
+    {{#if hasNextPage}}
+        <a href="/products?numPage={{nextPage}}"><button>Siguiente</button></a>
+    {{/if}}
+
+</center>

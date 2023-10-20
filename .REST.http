@@ -1,0 +1,135 @@
+//***********INTEGRACION WS MONGOOSE*****************
+//****************CARTS******************************
+###
+GET http://localhost:8080/api/carts/ 
+###
+GET http://localhost:8080/api/carts/651e2048296fdaf24dfe9fef
+
+
+###
+PUT http://localhost:8080/api/carts/651e2048296fdaf24dfe9fef/products/651eb3fbbe4faeb5fdff3b99
+Content-Type: application/json
+
+{
+     "quantity":2
+}
+###
+POST http://localhost:8080/api/carts
+Content-Type: application/json
+
+{
+  "description": "cart 8",
+  "quantity": 80,
+  "total": 1000
+}
+
+
+
+{
+  "description": "nuevo cart 4",
+  "quantity": 60,
+  "total": 1000
+}
+
+###
+DELETE http://localhost:8080/api/carts/651e28a062df8bb8e11424e4
+
+
+//*********** PRODUCTOS******************
+
+###
+GET http://localhost:8080/api/products 
+
+//trae por Id
+###
+GET http://localhost:8080/api/products/651eaf1cd5d57de4db098b56
+
+//probando querys
+###
+GET http://localhost:8080/api/products?limit=2&page=2
+
+//probando sort
+###
+GET http://localhost:8080/api/products?sort=1
+
+###
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+       
+    "title":"producto 12",
+    "description":"descripcion 12",
+    "price": 900,
+    "code": "189",
+    "stock" :800
+    
+}
+
+###
+PUT http://localhost:8080/api/products/651eb3fbbe4faeb5fdff3b99
+Content-Type: application/json
+
+{
+       
+    "title":"producto 3",
+    "description":"cambio descripcion 3",
+    "price":380,
+    "code":"063",
+    "stock" :200
+    
+}
+
+###
+DELETE http://localhost:8080/api/products/651ef393baa49f2234aa6ec9
+
+//********************MENSAJES********************************
+
+###
+GET http://localhost:8080/api/messages
+
+
+###
+POST http://localhost:8080/api/messages
+Content-Type: application/json
+
+{
+
+     "user": "Cristian",
+     "message": "LLegó bien"
+
+}
+
+###
+POST http://localhost:8080/api/messages
+Content-Type: application/json
+
+{
+
+     "user": "Raisa",
+     "message": "Productos recibidos"
+
+}
+
+###
+PUT http://localhost:8080/api/messages/651ebabbf26fb8d083357f58
+Content-Type: application/json
+
+{
+
+     "user": "Raisa 😀",
+     "message": "Productos recibidos"
+
+}
+
+###
+PUT http://localhost:8080/api/messages/651ebabbf26fb8d083357f58
+
+
+//****************UPLOAD*****************
+###
+GET http://localhost:8080/upload
+
+####
+POST http://localhost:8080/api/upload/upload
+Content-Content-Type: 
