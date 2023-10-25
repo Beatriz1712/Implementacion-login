@@ -4,7 +4,7 @@ import Cart from "../dao/carts.js";
 const cartRouter = Router(); //Crear enrutador
 const cartManager = new Cart();
 
-//? ----------- Metodos Cart
+//----------- Metodos Cart
 
 //POST CART
 cartRouter.post("/", async (req, res) => {
@@ -60,7 +60,7 @@ cartRouter.delete("/:idCart", async (req, res) => {
   }
 });
 
-//? ----------- Metodos Products in cart
+// ----------- Metodos Products in cart
 
 //POST PRODUCT IN CART
 cartRouter.post("/:idCart/products/:idProducts", async (req, res) => {

@@ -18,7 +18,7 @@ import sessionRouter from "./routes/sessions.routes.js"
 
 
 //!**** SERVER
-//Inicializar variables del Servidor
+//Inicializar variables Servidor
 const app = express();
 const PORT = 8080;
 const fileStorage = FileStore(session)
@@ -63,7 +63,7 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-//? **** RUTAS CRUD - THUNDERCLIENT
+//**** RUTAS CRUD 
 
 app.use("/products", productRouter);
 app.use("/cart", cartRouter);
@@ -71,7 +71,7 @@ app.use("/", viewsRouter);
 app.use("/message", messageRouter);
 app.use("/session", sessionRouter);
 
-//**** UP SERVER  */
+//****  SERVER  */
 app.listen(PORT, () => {
   console.log(chalk.bgYellowBright.black.bold(`Escuchando en puerto: ${PORT}`));
 });

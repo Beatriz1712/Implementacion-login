@@ -1,19 +1,19 @@
 import { promises as fs } from "fs";
-import { nanoid } from "nanoid"; //genera ids automaticos
+
 
 class ProductManager {
   constructor() {
     this.productsFilePath = "./src/models/products.json"; //Crear la ruta del archivo
   }
 
-  //? Lee los productos desde el archivo json.
+  // Lee los productos desde el archivo json.
 
   async readProducts() {
     let products = await fs.readFile(this.productsFilePath, "utf-8"); //Leer los arreglos en el arreglo de productos
     return JSON.parse(products);
   }
 
-  //? Escribe los productos en el archivo json.
+  // Escribe los productos en el archivo json.
 
   async writeProducts(product) {
     await fs.writeFile(this.productsFilePath, JSON.stringify(product));
@@ -24,7 +24,7 @@ class ProductManager {
     return products.find((prod) => prod.id === id);
   }
 
-  //? Agrega el producto al arreglo del archivo.
+  // Agrega el producto al arreglo del archivo.
 
 
   async addProduct(product) {
@@ -48,13 +48,13 @@ class ProductManager {
 
   }
 
-  //? Obtener todos los productos contenidos en el arregl
+  // Obtener todos los productos contenidos en el arregl
 
   async getAllProducts() {
     return await this.readProducts();
   }
 
-  //? Muestra el producto que corresponda a un id dado.
+  // Muestra el producto segun id dado.
 
   async getProductId(id) {
     try {
@@ -81,7 +81,7 @@ class ProductManager {
     return "Producto Actualizado";
   }
 
-  //? Eliminar un producto
+  // Eliminar un producto
 
   async deletProductId(id) {
     let products = await this.readProducts();

@@ -1,5 +1,4 @@
 import { promises as fs } from "fs";
-import { nanoid } from "nanoid";
 import cartModel from "../models/carts.model.js"
 import ProductManager from "./ProductManager.js";
 
@@ -10,7 +9,7 @@ class CartManager extends cartModel {
     super();
   }
 
-  //? ---- READ CART
+  // READ CART
   async readCart() {
     try {
       let carts = await CartManager.find({}).populate({

@@ -4,9 +4,9 @@ import productModel from "../models/products.model.js";
 export default class Cart {
   constructor() {}
 
-  //? ----------- Metodos Cart
+  //********Metodos Cart
 
-  //* GET
+  // GET
   //Consulta de todos los CARTS generados
   getAllCart = async () => {
     try {
@@ -18,7 +18,7 @@ export default class Cart {
     }
   };
 
-  //* GET BY ID CART
+  //GET BY ID CART
   //Consultar el carrito con un id en especifico suministrado.
   getCartId = async (idCart) => {
     try {
@@ -30,7 +30,7 @@ export default class Cart {
     }
   };
 
-  //* POST
+  // POST
   //Crear un carrito nuevo
   saveCart = async (cart) => {
     try {
@@ -42,7 +42,7 @@ export default class Cart {
     }
   };
 
-  //* PUT
+  // PUT
   //Actualizar un carrito con determinado id
   updateCart = async (idCart, cart) => {
     let result = await cartModel.findByIdAndUpdate(idCart, cart, { new: true }); //Entrego el id y entrego la data que debo actualizar
@@ -50,7 +50,7 @@ export default class Cart {
     return result;
   };
 
-  //* DELETE
+  // DELETE
   //Eliminar el carrito con un id en especifico suministrado.
   deleteCart = async (idCart) => {
     let result = await cartModel.deleteOne({ _id: `${idCart}` });
@@ -58,7 +58,7 @@ export default class Cart {
     return result;
   };
 
-  //? ----------- Metodos Productos en el carrito
+  //************* Metodos Productos en el carrito
 
   //POST PRODUCT IN CART
   //Insertar un producto en un carrito determinado.
