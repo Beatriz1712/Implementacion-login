@@ -1,102 +1,77 @@
+//Dependencias
 import express from "express";
-import { __dirname } from "./utils.js";
-import handlebars from "express-handlebars";
-import { router} from "./routes/productsRouter.js";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
-import cartsRouter from "./routes/cartsRouter.js";
-import productsRouter from "./routes/productsRouter.js";
-import viewsRouter from "./routes/viewsRouter.js"
-import ProductManager from "./Daos/Mongo/ProductManager.js";
-import CartManager from "./Daos/Mongo/CartManager.js";
-import { Server } from "socket.io";
+import handlebars from "express-handlebars";
+import chalk from "chalk";
+import * as path from "path"
+import FileStore from 'session-file-store'
 
-//import {http } from'http';
+// Fuentes de metodos, informacion y vistas.
+import __dirname from "./utils.js";
+import cartRouter from "./routes/cart.routes.js";
+import productRouter from "./routes/product.routes.js";
+import viewsRouter from "./routes/view.routes.js";
+import messageRouter from "./routes/message.routes.js";
+import sessionRouter from "./routes/sessions.routes.js"
 
-/*********config inicial**********/
+
+//!**** SERVER
+//Inicializar variables del Servidor
 const app = express();
-const PORT = process.env.PORT || 8080;
-const product = new ProductManager();
-const cart = new CartManager();
+const PORT = 8080;
+const fileStorage = FileStore(session)
 
+//Decirle al servidor que trabajaremos con JSON y que usara URL.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
-app.use('/products', router);
-app.use('/', viewsRouter);//vista template html del cliente
+//middleware
+app.use(express.static(__dirname + '/public')); //Rutas
 
-/********handlebars***************************/
+//!**** CONECT DATABASE  */
+//Validar conexion a la base de datos
+mongoose
+mongoose
+  .connect(
+    "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test"
+  )
+  .then(() => {
+    console.log("\u001b[1;36mConectada a la base de datos");
+  })
+  .catch((error) =>
+    console.error("\u001b[1;36mError al conectar a la base de datos", error)
+  )
+
+//**** SESSIONS IN DATABASE */
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+      "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test",
+      ttl: 3600,/* tiempo devida*/
+    }),
+    secret: "clave",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+//**** HANDLEBARS */
+
 app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-// static
-app.use('/', express.static(__dirname + "/public"))
+//? **** RUTAS CRUD - THUNDERCLIENT
 
+app.use("/products", productRouter);
+app.use("/cart", cartRouter);
+app.use("/", viewsRouter);
+app.use("/message", messageRouter);
+app.use("/session", sessionRouter);
 
-/********Conexion mostrando el puerto********/
-//const PORT = 8080;
-const httpServer = app.listen(PORT, () => {
-    console.log("Escuchando en puerto " + PORT);
+//**** UP SERVER  */
+app.listen(PORT, () => {
+  console.log(chalk.bgYellowBright.black.bold(`Escuchando en puerto: ${PORT}`));
 });
-
-
-/**********rutas del CRUD de carts  y products*****middleware**********/
-app.use('/', viewsRouter);
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
-
-
-/********Config mongoose**********************/
-//uri super conjunto de url http
-mongoose.connect( "mongodb+srv://beatriz1712sc:soynuevabasededatos@cluster0.2gm0bzy.mongodb.net/test")
-.then(()=>{
-    console.log("Conectada a la base de datos");
-})
-.catch(error => 
-    console.error("Error al conectar a la base de datos",error))
-
- 
-
-
-/*
-//config socket
-const socketServer = new Server(httpServer);
-let p = 0;
-socketServer.on('connection', async (socket) => {
-    p += 1;
-    console.log(`${p} connected`);
-
-    const products = await dbInstance.getProducts();
-    socket.emit('productList', products);
-//io.on
-    socket.on('addProduct', async product => {
-        console.log(" agregar producto");
-        try {
-            let c = await dbInstance.addProduct(product);
-            const updatedProducts = await dbInstance.getProducts();
-            console.log(updatedProducts);
-
-            if (Array.isArray(updatedProducts)) socketServer.emit('productList', updatedProducts);
-        } catch (error) {
-            return;
-        }
-    });
-
-    socket.on('deleteProduct', async (idProduct) => {
-        try {
-            const c = await dbInstance.deleteProduct(idProduct);
-            console.log(c);
-            const updatedProducts = await dbInstance.getProducts();
-            if (Array.isArray(updatedProducts)) socketServer.emit('productList', updatedProducts);
-        } catch (error) {
-            return;
-        }
-    });
-
-    socket.on('disconnect', (mssg) => {
-        p -= 1;
-        console.log(`${p} connected`);
-        console.log(mssg);
-    });
-});
-*/

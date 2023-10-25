@@ -1,38 +1,39 @@
-document.getElementById('username-form').addEventListener('submit', async(e) => {
-e.preventDefault();
-const userInputElement = document.getElementById('username');
-const messageInputElement = document.getElementById('message');
+document
+  .getElementById("container-form")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-const user = userInputElement.value;
-const message = messageInputElement.value;
+    const userInput = document.getElementById("username");
+    const messageInput = document.getElementById("message");
 
-try {
-const response = await fetch('api/message',{
-    method: "POST",
-    headers:{
-        'Content-Type' : 'application/json',
-    },
-    body: JSON.stringify({ user, message}),
-})
-if(response.ok){
-    const responseData = await response.json();
-    const successMessage = responseData.message;
-    Swal.fire({
-        icon:'success',
-        title: successMessage,
-        text: 'Mensaje enviado',
-        confirButtomText:'Aceptar',
-    }).then((result)=> {
-        if (result.isConfirmed){
+    const user = userInput.value;
+    const message = messageInput.value;
+
+    try {
+      const response = await fetch("/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user, message }),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const successMessage = responseData.message;
+
+        console.log("\u001b[1;35m Mensaje Enviado").then((result) => {
+          if (result.isConfirmed) {
             location.reload();
-        }
-    })
-    userInputElement.value = '';
-    messageInputElement.value = '';
-} else {
-    console.error('error al enviar el mensaje');
-}
-}catch (error){
-    console.log('error de red',error);
-}
-});
+          }
+        });
+
+        userInput.value = "";
+        messageInput.value = "";
+      } else {
+        console.error("Error al enviar el mensaje");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  });
