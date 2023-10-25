@@ -16,26 +16,31 @@ cartRouter.post("/", async (req, res) => {
 cartRouter.get("/", async (req, res) => {
   try {
     let carts = await cartManager.getAllCart();
-    res.send({ result: "sucess", payload: carts });
+    res.send({
+       result: "sucess",
+       payload: carts 
+      });
   } catch (error) {
     console.log("\u001b[1;34m Error al buscar carritos" + error);
   }
 });
 
 // GET CART BY ID 
-cartRouter.get("/:idCart", async (req, res) => {
-  let idCart = req.params.idCart;
+cartRouter.get("/:cid", async (req, res) => {
+  let cid = req.params.cid;
   try {
-    let carts = await cartManager.getCartId(idCart);
-    res.send({ result: "sucess", payload: carts });
+    let carts = await cartManager.getCartId(cid);
+    res.send({
+       result: "sucess",
+       payload: carts });
   } catch (error) {
     console.log("\u001b[1;34m Carrito no encontrado" + error);
   }
 });
 
 // UPDATE CART
-cartRouter.put("/:idCart", async (req, res) => {
-  let { idCart } = req.params;
+cartRouter.put("/:cid", async (req, res) => {
+  let { cid } = req.params;
   let cartsToReplace = req.body;
   if (
     !cartsToReplace.description ||
@@ -44,17 +49,21 @@ cartRouter.put("/:idCart", async (req, res) => {
   ) {
     res.send({ status: "error", error: "No hay datos en parametros" });
   }
-  let result = await cartManager.updateCart(idCart, cartsToReplace);
-  res.send({ status: "sucess", payload: result });
+  let result = await cartManager.updateCart(cid, cartsToReplace);
+  res.send({
+     status: "sucess",
+     payload: result });
 });
 
 // DELETE CART 
-cartRouter.delete("/:idCart", async (req, res) => {
-  let idCart = req.params.idCart;
+cartRouter.delete("/:cid", async (req, res) => {
+  let cid = req.params.idCart;
   try {
-    let carts = await cartManager.deleteCart(idCart);
+    let carts = await cartManager.deleteCart(cid);
     console.log("\u001b[1;34m Carrito eliminado" + error);
-    res.send({ result: "sucess", payload: carts });
+    res.send({
+       result: "sucess",
+       payload: carts });
   } catch (error) {
     console.log("\u001b[1;34m Error al eliminar carrito " + error);
   }
@@ -63,30 +72,34 @@ cartRouter.delete("/:idCart", async (req, res) => {
 // ----------- Metodos Products in cart
 
 //POST PRODUCT IN CART
-cartRouter.post("/:idCart/products/:idProducts", async (req, res) => {
-  let idCart = req.params.idCart;
-  let idProduct = req.params.idProducts;
+cartRouter.post("/:cid/products/:pid", async (req, res) => {
+  let cid = req.params.cid;
+  let pid = req.params.pid;
   try {
-    let carts = await cartManager.insertProductCart(idCart, idProduct);
-    res.send({ result: "sucess", payload: carts });
+    let carts = await cartManager.insertProductCart(cid, pid);
+    res.send({
+       result: "sucess", 
+       payload: carts });
   } catch (error) {
     console.log("\u001b[1;34m Error al insertar producto al carrito " + error);
   }
 });
 
 // UPDATE PRODUCT IN CART
-cartRouter.put("/:idCart/products/:idProduct", async (req, res) => {
-  let idCart = req.params.idCart;
-  let idProduct = req.params.idProduct;
+cartRouter.put("/:cid/products/:pid", async (req, res) => {
+  let cid = req.params.cid;
+  let pid = req.params.pid;
   let newQuantity = req.body.quantity;
 
   try {
     const result = await cartManager.updateProductCart(
-      idCart,
-      idProduct,
+      cid,
+      pid,
       newQuantity
     );
-    res.send({ result: "sucess", payload: result });
+    res.send({ 
+      result: "sucess",
+      payload: result });
   } catch (error) {
     console.log(
       "\u001b[1;34m Error al actualizar cantidad de producto en el carrito " +
@@ -94,24 +107,26 @@ cartRouter.put("/:idCart/products/:idProduct", async (req, res) => {
     );
   }
   const result = await cartManager.updateProductCart(
-    idCart,
-    idProduct,
+    cid,
+    pid,
     newQuantity
   );
-  res.send({ result: "sucess", payload: result });
+  res.send({
+     result: "sucess",
+     payload: result });
 });
 
 // DELETE PRODUCT IN CART
-cartRouter.delete("/:idCart/products/:idProducts", async (req, res) => {
-  let idCart = req.params.idCart;
-  let idProduct = req.params.idProduct;
-  res.send(await cartManager.deleteProductCart(idCart, idProduct));
+cartRouter.delete("/cid/products/:pid", async (req, res) => {
+  let cid = req.params.cid;
+  let pid = req.params.pid;
+  res.send(await cartManager.deleteProductCart(cid, pid));
 });
 
 export default cartRouter;
 
 // DELETE ALL PRODUCTS OF CART
-cartRouter.delete("/:idCart/products", async (req, res) => {
-  let idCart = req.params.idCart;
-  res.send(await cartManager.deleteAllProductsCart(idCart));
+cartRouter.delete("/:cid/products", async (req, res) => {
+  let cid = req.params.cid;
+  res.send(await cartManager.deleteAllProductsCart(cid));
 });

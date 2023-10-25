@@ -3,7 +3,7 @@ import userModel from "../models/users.model.js";
 
 const sessionRouter = Router();
 
-// regidter USER
+// register... USER
 sessionRouter.post("/register", async (req, res) => {
   //construccion del cuerpo del registro
   const { first_name, last_name, email, age, password, rol } = req.body;
@@ -28,7 +28,9 @@ sessionRouter.post("/register", async (req, res) => {
 
   //Pasamos el user al model por medio del create.
   let result = await userModel.create(user);
-  res.send({ status: "sucess", message: "User registered" });
+  res.send({
+      status: "sucess",
+      message: "User registered" });
 });
 
 // LOGIN
@@ -40,7 +42,9 @@ sessionRouter.post("/login", async (req, res) => {
   if (!user)
     return res
       .status(400)
-      .send({ status: "error", error: "Incorrect credentials" });
+      .send({ 
+         status: "error",
+         error: "Incorrect credentials" });
 
   req.session.user = {
     name: `${user.first_name} ${user.last_name}`,
@@ -60,7 +64,9 @@ sessionRouter.get("/logout", async (req,res) => {
   req.session.destroy((error) =>{
     if(error)
     {
-        return res.json({ status: 'Logout Error', body: error})
+      return res.json({ 
+          status: 'Logout Error',
+          body: error})
     }
     res.redirect('/')
 })    

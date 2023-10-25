@@ -8,7 +8,7 @@ const messageManager = new Message();
 // SEND MENSAJE
 messageRouter.post("/", async (req, res) => {
    let { user, message } = req.body;
-   console.log("aja")
+   console.log("ok")
  
    const newMessage = {
       user: user,
@@ -23,7 +23,9 @@ messageRouter.post("/", async (req, res) => {
  messageRouter.get("/", async (req, res) => {
    try {
      const messages = await messageManager.getAllMessage();
-     res.send({ status: "succes", payload: messages });
+     res.send({
+       status: "succes",
+       payload: messages });
    } catch (error) {
      console.error("Error en la ruta GET /messages:", error);
    }

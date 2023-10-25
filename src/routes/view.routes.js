@@ -23,10 +23,10 @@ viewRouter.get("/carts", async (req, res) => {
 });
 
 //  DETAIL PRODUCT
-viewRouter.get("/product/:idProduct", async (req, res) => {
-  let idProduct = req.params.idProduct;
+viewRouter.get("/product/:pid", async (req, res) => {
+  let pid = req.params.pid;
 
-  let result = await productManager.getProductId(idProduct);
+  let result = await productManager.getProductId(pid);
   res.render("product", result);
 });
 

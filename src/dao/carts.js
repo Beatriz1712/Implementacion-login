@@ -168,7 +168,7 @@ export default class Cart {
 
       await cart.save();
 
-      return "Productos  eliminados del carrito";
+      return "Productos eliminados del carrito";
     } catch (error) {
       console.error("Error:", error);
       return "Error al eliminar los productos del carrito";

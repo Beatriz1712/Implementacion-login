@@ -55,11 +55,13 @@ productRouter.get("/products", async (req, res) => {
 
 // GET PRODUCT ID
 
-productRouter.get("/:idProduct", async (req, res) => {
-  let idProduct  = req.params.idProduct;
+productRouter.get("/:pid", async (req, res) => {
+  let pid  = req.params.pid;
   try {
-    let result = await productManager.getProductId(idProduct);
-    res.send({ status: "succes", payload: result });
+    let result = await productManager.getProductId(pid);
+    res.send({ 
+      status: "succes",
+     payload: result });
   } catch (error) {
     console.error("Producto no encontrado");
   }
@@ -77,7 +79,7 @@ productRouter.get("/sample-products", async (req, res) => {
   }
 });
 
-//GET PAGE
+//GET PAGE...pagination
 
 productRouter.get("/page-products/:page", async (req, res) => {
   let page = parseInt(req.params.page);
@@ -110,19 +112,21 @@ productRouter.get("/sort/:sort", async (req, res) => {
 
 //  UPDATE PRODUCT
 //Actualizar un producto
-productRouter.put("/:idProduct", async (req, res) => {
-  let { idProduct } = req.params;
+productRouter.put("/:pid", async (req, res) => {
+  let id  = req.params;
   let productReplace = req.body;
 
-  let result = await productManager.updateProduct(idProduct, productReplace);
-  res.send({ status: "sucess", payload: result });
+  let result = await productManager.updateProduct(pid, productReplace);
+  res.send({ 
+    status: "sucess",
+    payload: result });
 });
 
 // DELETE PRODUCT
 //Eliminar un producto
-productRouter.delete("/:idProduct", async (req, res) => {
-  let { idProduct } = req.params;
-  let result = await productManager.deleteProduct(idProduct);
+productRouter.delete("/:pid", async (req, res) => {
+  let pid = req.params;
+  let result = await productManager.deleteProduct(pid);
   res.send("Producto Eliminado");
 });
 
