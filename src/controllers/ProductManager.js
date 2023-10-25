@@ -35,7 +35,7 @@ class ProductManager {
     if (codeExists) {
       throw new Error(`Ya existe un producto con el código: ${product.code}`);
     }
-      product.id = nanoid(5); //El numero que entra como parametro determina la cant de digitos del id.
+      
       let allProducts = [...previousProducts, product];
       await this.writeProducts(allProducts);
       console.log( "\u001b[1;36m Producto agregado" )

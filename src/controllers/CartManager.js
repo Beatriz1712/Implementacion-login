@@ -32,37 +32,37 @@ class CartManager extends cartModel {
     await fs.writeFile(this.cartFilePath, JSON.stringify(cart));
   }
 
-  async existId(id) {
+  async existId(cid) {
     let carts = await this.readCart();
-    return carts.find((cart) => cart.id === id);
+    return carts.find((cart) => cart.id === cid);
   }
 
  
 
-  async getCartd(id) {
-    let cartId = await this.existId(id);
-    if (!cartId) return "Carrito no encontrado";
-    return cartId;
+  async getCartd(cid) {
+    let cid = await this.existId(cid);
+    if (!cid) return "Carrito no encontrado";
+    return cid;
   }
 
-  async addProductCart(cartId, productId) {
-    const cartById = await this.existId(cartId);
-    if (!cartById) return "Carrito no encontrado";
+  async addProductCart(cid, pid) {
+    const cid = await this.existId(cid);
+    if (!cid) return "Carrito no encontrado";
 
-    const productById = await totalProduct.existId(productId);
+    const productById = await totalProduct.existId(pid);
     if (!productById) return "Producto no encontrado";
 
     const allCart = await this.readCart();
 
     for (const cartItem of allCart) {
-      if (cartItem.id === cartId) {
+      if (cartItem.id === cid) {
         const existingProduct = cartItem.products.find(
-          (product) => product.id === productId
+          (product) => product.id === pid
         );
         if (existingProduct) {
           existingProduct.quantity++;
         } else {
-          cartItem.products.push({ id: productId, quantity: 1 });
+          cartItem.products.push({ id: pid, quantity: 1 });
         }
       }
     }

@@ -16,8 +16,8 @@ export default class Products {
     return result;
   };
 
-  getProductId = async (idProduct) => {
-    let result = await productModel.findById(idProduct);
+  getProductId = async (pid) => {
+    let result = await productModel.findById(pid);
     console.log("\u001b[1;36m Producto Encontrado");
     return result;
   
@@ -76,8 +76,8 @@ export default class Products {
   };
 
   //   PUT
-  updateProduct = async (idProduct, product) => {
-    let result = await productModel.findByIdAndUpdate(idProduct, product, {
+  updateProduct = async (pid, product) => {
+    let result = await productModel.findByIdAndUpdate(pid, product, {
       new: true,
     }); //Entrego el id y entrego la data que debo actualizar
     console.log("\u001b[1;36m Producto actualizado");
@@ -85,8 +85,8 @@ export default class Products {
   };
 
   //  DELETE
-  deleteProduct = async (idProduct) => {
-    let result = await productModel.deleteOne({ _id: idProduct });
+  deleteProduct = async (pid) => {
+    let result = await productModel.deleteOne({ _id: pid });
     console.log("\u001b[1;31m Producto Eliminado");
     return result;
   };
